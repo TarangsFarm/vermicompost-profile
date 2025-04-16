@@ -119,7 +119,12 @@
     </tbody>
   </table>
   
-              Also, check out our Video <a href="https://www.youtube.com/watch?v=xCw8mGeGwEA&t=20s" target="_blank"><strong>for more information  <i class="fa fa-youtube-play"></i></strong></a>  
+<div style="margin-top: 20px;">
+  <button onclick="document.getElementById('videoModal').style.display='flex'"
+    style="padding: 10px 20px; font-size: 16px; border-radius: 8px; background-color: #c4302b; color: white; border: none; cursor: pointer;">
+    🎥 Watch Our Farm Video
+  </button>
+</div>  
 
             </div>
             <div class="social">
@@ -131,5 +136,14 @@
             </div>
         </div>
     </div>
+    <!-- Video Modal -->
+ <div class="modal" id="videoModal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="document.getElementById('videoModal').style.display='none'">&times;</span>
+    <iframe width="100%" height="315" 
+      src="https://www.youtube.com/embed/xCw8mGeGwEA?autoplay=1"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+ </div>
+</div>
 </body>
 </html>
