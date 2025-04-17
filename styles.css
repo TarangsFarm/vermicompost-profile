@@ -123,3 +123,72 @@ table {
   cursor: pointer;
   color: #333;
 }
+
+/* Modal styling */
+.modal {
+  display: block; /* Show on load */
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.1); /* transparent layer */
+  backdrop-filter: blur(8px); /* <-- This adds the blur */
+  -webkit-backdrop-filter: blur(8px); /* Safari support */
+}
+
+.modal-content {
+  background-color: #f9f9f9;
+  margin: 10% auto;
+  padding: 0;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 700px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-family: 'Lobster', cursive;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.glow-title {
+  color: #ffffff;
+  text-align: center;
+  font-size: 1.8em;
+  text-shadow: 0 0 8px #4CAF50, 0 0 12px #81c784;
+  font-family: 'Lobster', cursive;
+  margin-bottom: 5px;
+}
+
+.glow-subtitle {
+  color: #eeeeee;
+  text-align: center;
+  font-size: 1.2em;
+  text-shadow: 0 0 6px #66bb6a;
+  font-weight: normal;
+  font-family: 'Lobster', cursive;
+}
