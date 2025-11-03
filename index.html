@@ -1,35 +1,181 @@
-<div class="flip-card">
-  <div class="flip-card-inner">
-    <!-- FRONT SIDE -->
-    <div class="flip-card-front">
-      <img src="tarangsfarmlogo.png" alt="Tarang's Farm Logo" class="farm-logo">
-      <h2>Tarang’s Farm</h2>
-      <p class="tagline">Rooted in Nature • Growing with Science</p>
-      <p class="intro">
-        A 2-acre organic farm nurturing life from soil to leaf.<br>
-        Home to <b>lemon orchards</b>, <b>multilayer crops</b>, and our signature
-        <b>RootAmrit Vermicompost</b> — crafted to enrich every field.
-      </p>
-      <p class="location">📍 Bhopal • Semli Jadid</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarang’s Farm</title>
 
-    <!-- BACK SIDE -->
-    <div class="flip-card-back">
-      <h3>🌱 What We Grow</h3>
-      <p>
-        • RootAmrit Vermicompost<br>
-        • Fortified Organic Compost<br>
-        • Multilayer Crops: Ginger, Chili, Moringa, Gourds<br>
-        • Lemon Orchard — fed with RootAmrit
-      </p>
+  <!-- Font and Style -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-      <h3>💚 Our Vision</h3>
-      <p>
-        To revive soil health and inspire regenerative farming —
-        where every plant grows in balance with nature.
-      </p>
+  <style>
+    body {
+      background: url('farmbackground.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-      <button onclick="playFarmVideo()">🎥 Visit Tarang’s Farm</button>
+    .flip-card {
+      background-color: transparent;
+      width: 340px;
+      height: 420px;
+      perspective: 1000px;
+      margin: auto;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      box-sizing: border-box;
+
+      /* Glass effect */
+      background: rgba(25, 25, 25, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    .farm-logo {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 15px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.85);
+      object-fit: contain;
+    }
+
+    h2 {
+      margin: 10px 0 5px 0;
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+
+    .tagline {
+      font-size: 0.95em;
+      font-style: italic;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      font-size: 0.9em;
+      line-height: 1.5em;
+      max-width: 280px;
+      margin: 10px auto;
+      opacity: 0.95;
+    }
+
+    .location {
+      margin-top: 10px;
+      font-size: 0.85em;
+      opacity: 0.85;
+    }
+
+    .flip-card-back h3 {
+      margin: 8px 0;
+    }
+
+    .flip-card-back p {
+      font-size: 0.9em;
+      line-height: 1.5em;
+      margin-bottom: 8px;
+      opacity: 0.95;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #c4302b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #a82820;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <!-- FRONT SIDE -->
+      <div class="flip-card-front">
+        <img src="tarangsfarmlogo.png" alt="Tarang's Farm Logo" class="farm-logo">
+        <h2>Tarang’s Farm</h2>
+        <p class="tagline">Rooted in Nature • Growing with Science</p>
+        <p class="intro">
+          A 2-acre organic farm nurturing life from soil to leaf.<br>
+          Home to <b>lemon orchards</b>, <b>multilayer crops</b>, and our signature
+          <b>RootAmrit Vermicompost</b> — crafted to enrich every field.
+        </p>
+        <p class="location">📍 Bhopal • Semli Jadid</p>
+      </div>
+
+      <!-- BACK SIDE -->
+      <div class="flip-card-back">
+        <h3>🌱 What We Grow</h3>
+        <p>
+          • RootAmrit Vermicompost<br>
+          • Fortified Organic Compost<br>
+          • Multilayer Crops: Ginger, Chili, Moringa, Gourds<br>
+          • Lemon Orchard — fed with RootAmrit
+        </p>
+
+        <h3>💚 Our Vision</h3>
+        <p>
+          To revive soil health and inspire regenerative farming —
+          where every plant grows in balance with nature.
+        </p>
+
+        <button onclick="playFarmVideo()">🎥 Visit Tarang’s Farm</button>
+      </div>
     </div>
   </div>
-</div>
+
+  <script>
+    function playFarmVideo() {
+      alert("Redirect to Tarang’s Farm video or gallery!");
+      // Replace alert with your video modal or YouTube link
+      // window.open('https://www.youtube.com/yourvideo', '_blank');
+    }
+  </script>
+
+</body>
+</html>
