@@ -9,8 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    /* === Base Layout === */
     body {
-      background: url('https://raw.githubusercontent.com/tarangkarpe/tarangkarpe.github.io/refs/heads/master/leaf.jpg') no-repeat center center fixed;
+      background: url('https://raw.githubusercontent.com/tarangkarpe/tarangkarpe.github.io/refs/heads/master/leaf.jpg') 
+                  no-repeat center center fixed;
       background-size: cover;
       font-family: 'Poppins', sans-serif;
       color: #fff;
@@ -21,19 +23,18 @@
       margin: 0;
     }
 
+    /* === Flip Card === */
     .flip-card {
       background-color: transparent;
       width: 340px;
       height: 420px;
       perspective: 1000px;
-      margin: auto;
     }
 
     .flip-card-inner {
       position: relative;
       width: 100%;
       height: 100%;
-      text-align: center;
       transition: transform 0.8s;
       transform-style: preserve-3d;
     }
@@ -42,31 +43,32 @@
       transform: rotateY(180deg);
     }
 
-    .flip-card-front, .flip-card-back {
+    .flip-card-front,
+    .flip-card-back {
       position: absolute;
       width: 100%;
       height: 100%;
       border-radius: 16px;
-      backface-visibility: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 22px;
       box-sizing: border-box;
-
-      /* Glass effect */
       background: rgba(25, 25, 25, 0.35);
       border: 1px solid rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden; /* Safari fix */
     }
 
     .flip-card-back {
       transform: rotateY(180deg);
     }
 
+    /* === Elements === */
     .farm-logo {
       width: 90px;
       height: 90px;
@@ -95,6 +97,11 @@
       max-width: 280px;
       margin: 10px auto;
       opacity: 0.95;
+    }
+
+    .highlight {
+      color: #b8f1b0;
+      font-weight: 600;
     }
 
     .location {
@@ -135,33 +142,35 @@
 
   <div class="flip-card">
     <div class="flip-card-inner">
+
       <!-- FRONT SIDE -->
       <div class="flip-card-front">
-        <img src="https://raw.githubusercontent.com/TarangsFarm/vermicompost-profile/refs/heads/main/large_logo.png" alt="Tarang's Farm Logo" class="farm-logo">
+        <img src="https://raw.githubusercontent.com/TarangsFarm/vermicompost-profile/refs/heads/main/large_logo.png" 
+             alt="Tarang's Farm Logo" class="farm-logo">
         <h2>Tarang’s Farm</h2>
         <p class="tagline">Rooted in Nature • Growing with Science</p>
         <p class="intro">
-          A 2-acre organic farm nurturing life from soil to leaf.<br>
-          Home to <b>lemon orchards</b>, <b>multilayer crops</b>, and our signature
-          <b>RootAmrit Vermicompost</b> — crafted to enrich every field.
+          A <span class="highlight">2-acre organic farm</span> where innovation meets soil.<br>
+          We grow <b>lemons</b>, <b>ginger</b>, <b>moringa</b>, <b>chilies</b>, and <b>gourds</b>, 
+          all nourished by our in-house <b>RootAmrit Vermicompost</b>.
         </p>
         <p class="location">📍 Bhopal • Semli Jadid</p>
       </div>
 
       <!-- BACK SIDE -->
       <div class="flip-card-back">
-        <h3>🌱 What We Grow</h3>
+        <h3>🌾 What We Offer</h3>
         <p>
-          • RootAmrit Vermicompost<br>
-          • Fortified Organic Compost<br>
-          • Multilayer Crops: Ginger, Chili, Moringa, Gourds<br>
-          • Lemon Orchard — fed with RootAmrit
+          • RootAmrit Organic Vermicompost<br>
+          • Fortified Compost & Soil Boosters<br>
+          • Multilayer Crop Produce<br>
+          • Fresh Lemons from our Orchard
         </p>
 
         <h3>💚 Our Vision</h3>
         <p>
-          To revive soil health and inspire regenerative farming —
-          where every plant grows in balance with nature.
+          To cultivate a self-sustaining ecosystem — restoring soil vitality and creating a model for 
+          <b>regenerative organic farming</b> in India.
         </p>
 
         <button onclick="playFarmVideo()">🎥 Visit Tarang’s Farm</button>
@@ -171,9 +180,7 @@
 
   <script>
     function playFarmVideo() {
-      alert("Redirect to Tarang’s Farm video or gallery!");
-      // Replace alert with your video modal or YouTube link
-      // window.open('https://www.youtube.com/yourvideo', '_blank');
+      window.open('https://www.youtube.com/@TarangsFarm', '_blank');
     }
   </script>
 
