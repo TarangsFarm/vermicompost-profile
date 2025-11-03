@@ -1,266 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tarang’s Farm</title>
 
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
+    html,body { height:100%; margin:0; }
     body {
+      font-family:'Poppins',sans-serif;
       background: url('https://raw.githubusercontent.com/tarangkarpe/tarangkarpe.github.io/refs/heads/master/leaf.jpg')
-                  no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
+                  center/cover no-repeat fixed;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow:hidden;
     }
 
-    /* === Flip Card === */
+    /* container */
     .flip-card {
-      width: 340px;
-      height: 420px;
-      perspective: 1200px;
+      width:340px; height:420px;
+      perspective:1400px;
+      -webkit-perspective:1400px;
+      overflow:hidden;            /* important */
+      will-change: transform;
     }
 
     .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.8s ease;
+      width:100%; height:100%;
+      position:relative;
+      transition: transform 0.75s cubic-bezier(.2,.9,.3,1);
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      will-change: transform;
     }
 
-    .flip-card:hover .flip-card-inner {
+    /* toggle via class or hover */
+    .flip-card:hover .flip-card-inner,
+    .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
 
-    .flip-card-front, .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 22px;
-      background: rgba(25, 25, 25, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+    /* faces */
+    .flip-card-front,
+    .flip-card-back {
+      position:absolute; inset:0;
+      border-radius:16px;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      padding:22px; box-sizing:border-box;
+      background: rgba(25,25,25,0.35);
+      border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+
+      /* isolation directives */
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      box-sizing: border-box;
+      will-change: transform, opacity;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      /* create GPU layer */
+      transform: translateZ(0);
+    }
+
+    /* IMPORTANT: place each face on its own plane + tiny z */
+    .flip-card-front {
+      transform: rotateY(0deg) translateZ(1px);
+      -webkit-transform: rotateY(0deg) translateZ(1px);
+      z-index: 2;
     }
 
     .flip-card-back {
-      transform: rotateY(180deg);
+      transform: rotateY(180deg) translateZ(1px);
+      -webkit-transform: rotateY(180deg) translateZ(1px);
+      z-index: 1;
     }
 
-    /* === Text + Logo === */
-    .farm-logo {
-      width: 90px;
-      height: 90px;
-      margin-bottom: 15px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.85);
-      object-fit: contain;
-    }
-
-    h2 {
-      margin: 10px 0 5px 0;
-      font-size: 1.5em;
-      font-weight: 600;
-    }
-
-    .tagline {
-      font-size: 0.95em;
-      font-style: italic;
-      opacity: 0.9;
-      margin-bottom: 10px;
-    }
-
-    .intro {
-      font-size: 0.9em;
-      line-height: 1.5em;
-      max-width: 280px;
-      margin: 10px auto;
-      opacity: 0.95;
-      text-align: center;
-    }
-
-    .highlight {
-      color: #b8f1b0;
-      font-weight: 600;
-    }
-
-    .location {
-      margin-top: 10px;
-      font-size: 0.85em;
-      opacity: 0.85;
-    }
-
-    .flip-card-back h3 {
-      margin: 8px 0;
-    }
-
-    .flip-card-back p {
-      font-size: 0.9em;
-      line-height: 1.5em;
-      margin-bottom: 8px;
-      opacity: 0.95;
-      text-align: center;
-    }
+    /* content */
+    .farm-logo { width:90px; height:90px; border-radius:50%; margin-bottom:12px;
+                 background: rgba(255,255,255,0.85); object-fit:contain; }
+    h2 { margin:8px 0 4px; font-size:1.45rem; font-weight:600; color:#fff; }
+    .tagline { font-style:italic; opacity:.95; margin-bottom:8px; }
+    .intro, .back-text { font-size:0.95rem; line-height:1.45; text-align:center; opacity:.95; margin:6px 0; }
+    .highlight { color:#b8f1b0; font-weight:600; }
+    .location { font-size:0.85rem; opacity:.85; margin-top:8px; }
 
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #c4302b;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s;
+      margin-top:12px; padding:10px 16px; border-radius:8px;
+      border:0; cursor:pointer; font-weight:600;
+      background:#c4302b; color:#fff;
     }
+    button:hover { background:#a82820; }
 
-    button:hover {
-      background-color: #a82820;
-    }
-
-    /* === Video Popup === */
+    /* video popup */
     .video-popup {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      display:none; position:fixed; inset:0; z-index:1200;
       background: rgba(0,0,0,0.6);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
+      align-items:center; justify-content:center;
     }
-
-    .video-content {
-      position: relative;
-      width: 90%;
-      max-width: 640px;
-      background: rgba(25,25,25,0.9);
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      overflow: hidden;
+    .video-box {
+      width:90%; max-width:720px; border-radius:12px; overflow:hidden;
+      background: rgba(12,12,12,0.95);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6); position:relative;
     }
+    .video-box iframe { width:100%; height:400px; border:0; display:block; }
+    .video-close { position:absolute; top:10px; right:12px; width:36px; height:36px;
+                   border-radius:50%; background:rgba(255,255,255,0.12); color:#fff; border:0; cursor:pointer; font-size:20px; }
+    .video-close:hover { background:rgba(255,255,255,0.2); }
 
-    .video-content iframe {
-      width: 100%;
-      height: 360px;
-      border: none;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 8px;
-      right: 12px;
-      font-size: 20px;
-      cursor: pointer;
-      color: #fff;
-      background: rgba(255,255,255,0.2);
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: background 0.3s;
-    }
-
-    .close-btn:hover {
-      background: rgba(255,255,255,0.4);
+    @media (max-width:420px) {
+      .flip-card { width:300px; height:380px; }
+      .video-box iframe { height:260px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Flip Card -->
-  <div class="flip-card">
+  <div class="flip-card" id="card" role="button" tabindex="0" aria-label="Tarang's Farm card — click or press Enter to flip">
     <div class="flip-card-inner">
 
-      <div class="flip-card-front">
-        <img src="https://raw.githubusercontent.com/TarangsFarm/vermicompost-profile/refs/heads/main/large_logo.png"
-             alt="Tarang's Farm Logo" class="farm-logo">
+      <!-- FRONT (uses your exact logo link) -->
+      <div class="flip-card-front" aria-hidden="false">
+        <img class="farm-logo" src="https://raw.githubusercontent.com/TarangsFarm/vermicompost-profile/refs/heads/main/large_logo.png" alt="Tarang's Farm logo">
         <h2>Tarang’s Farm</h2>
-        <p class="tagline">Rooted in Nature • Growing with Science</p>
-        <p class="intro">
+        <div class="tagline">Rooted in Nature • Growing with Science</div>
+        <div class="intro">
           A <span class="highlight">2-acre organic farm</span> in Bhopal nurturing soil and soul.<br>
-          We grow <b>lemons</b>, <b>ginger</b>, <b>moringa</b>, <b>chilies</b>, and <b>gourds</b>, 
-          all nourished with our in-house <b>RootAmrit Vermicompost</b>.
-        </p>
-        <p class="location">📍 Semli Jadid • Bhopal</p>
+          We grow <b>lemons</b>, <b>ginger</b>, <b>moringa</b>, <b>chilies</b> and <b>gourds</b>,
+          nourished by our in-house <b>RootAmrit Vermicompost</b>.
+        </div>
+        <div class="location">📍 Semli Jadid • Bhopal</div>
       </div>
 
-      <div class="flip-card-back">
-        <h3>🌾 What We Offer</h3>
-        <p>
+      <!-- BACK -->
+      <div class="flip-card-back" aria-hidden="true">
+        <h2 style="font-size:1.05rem;margin-bottom:6px">🌾 What We Offer</h2>
+        <div class="back-text">
           • RootAmrit Organic Vermicompost<br>
-          • Fortified Compost & Soil Boosters<br>
+          • Fortified Soil Enrichers<br>
           • Multilayer Crop Produce<br>
           • Lemon Orchard Harvests
-        </p>
+        </div>
 
-        <h3>💚 Our Vision</h3>
-        <p>
-          Building India’s model for <b>regenerative farming</b> — reviving soil health and 
-          inspiring sustainable cultivation.
-        </p>
+        <div style="margin-top:8px;font-weight:600">💚 Our Vision</div>
+        <div class="intro" style="margin-top:6px">
+          Building India’s model for <b>regenerative farming</b> — reviving soil health and inspiring sustainable cultivation.
+        </div>
 
-        <button onclick="playFarmVideo()">🎥 Visit Tarang’s Farm</button>
+        <button type="button" id="openVideoBtn">🎥 Visit Tarang’s Farm</button>
       </div>
+
     </div>
   </div>
 
-  <!-- Popup Video -->
-  <div id="videoPopup" class="video-popup">
-    <div class="video-content">
-      <span class="close-btn" onclick="closeVideo()">&times;</span>
-      <iframe id="farmVideo" 
-              src="https://www.youtube.com/embed/NQYKpVwpRXA?autoplay=1"
-              title="Tarang’s Farm Intro"
-              allow="autoplay; encrypted-media"
-              allowfullscreen></iframe>
+  <!-- popup (iframe src is set only when opened) -->
+  <div id="videoPopup" class="video-popup" aria-hidden="true">
+    <div class="video-box" role="dialog" aria-label="Tarang's Farm video">
+      <button class="video-close" id="closeVideoBtn" aria-label="Close video">×</button>
+      <iframe id="farmIframe" src="" allow="autoplay; encrypted-media" allowfullscreen title="Tarang's Farm Intro"></iframe>
     </div>
   </div>
 
   <script>
-    // Opens video automatically when page loads
-    window.addEventListener('load', () => {
-      const popup = document.getElementById('videoPopup');
-      popup.style.display = 'flex';
+    // --- flip for keyboard and tap (makes mobile reliable) ---
+    const card = document.getElementById('card');
+    card.addEventListener('click', (e) => {
+      // if user clicked the video button, don't flip
+      if (e.target && (e.target.id === 'openVideoBtn' || e.target.closest('#openVideoBtn'))) return;
+      card.classList.toggle('flipped');
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('flipped'); }
     });
 
-    // Button-triggered video
-    function playFarmVideo() {
-      const popup = document.getElementById('videoPopup');
+    // --- video popup logic (uses your exact YouTube ID) ---
+    const VIDEO_URL = "https://www.youtube.com/embed/NQYKpVwpRXA?rel=0&autoplay=1&mute=0";
+    const popup = document.getElementById('videoPopup');
+    const iframe = document.getElementById('farmIframe');
+    const openBtn = document.getElementById('openVideoBtn');
+    const closeBtn = document.getElementById('closeVideoBtn');
+
+    function openVideo() {
+      iframe.src = VIDEO_URL;
       popup.style.display = 'flex';
+      popup.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
     }
 
-    // Close video popup
     function closeVideo() {
-      const popup = document.getElementById('videoPopup');
-      const iframe = document.getElementById('farmVideo');
-      iframe.src = iframe.src; // stops playback
+      // remove src to stop playback and free resources
+      iframe.src = '';
       popup.style.display = 'none';
+      popup.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
     }
-  </script>
 
+    openBtn.addEventListener('click', openVideo);
+    closeBtn.addEventListener('click', closeVideo);
+    // click outside to close
+    popup.addEventListener('click', (e) => { if (e.target === popup) closeVideo(); });
+
+    // Auto-open once on load (small delay so background renders)
+    window.addEventListener('load', () => { setTimeout(openVideo, 800); });
+
+    // --- helpful: clear flip if video opened (optional) ---
+    openBtn.addEventListener('click', () => card.classList.remove('flipped'));
+
+    // Accessibility: ESC closes video
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popup.style.display === 'flex') closeVideo();
+    });
+  </script>
 </body>
 </html>
