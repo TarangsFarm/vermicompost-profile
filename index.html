@@ -1,245 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tarang’s Farm</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tarang’s Farm</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <style>
-    html,body { height:100%; margin:0; }
-    body {
-      font-family:'Poppins',sans-serif;
-      background: url('https://raw.githubusercontent.com/tarangkarpe/tarangkarpe.github.io/refs/heads/master/leaf.jpg')
-                  center/cover no-repeat fixed;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      overflow:hidden;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+<style>
+html,body{
+  margin:0;padding:0;
+  font-family:'Poppins',sans-serif;
+  color:#fff;
+  background:url('https://raw.githubusercontent.com/tarangkarpe/tarangkarpe.github.io/refs/heads/master/leaf.jpg') center/cover no-repeat fixed;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+main{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:80px 20px;
+  gap:60px;
+}
+.row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:40px;
+  max-width:1600px;
+}
+.flip-card{
+  width:420px;height:520px;perspective:1400px;
+}
+.flip-card-inner{
+  width:100%;height:100%;
+  position:relative;
+  transition:transform .8s cubic-bezier(.2,.9,.3,1);
+  transform-style:preserve-3d;
+}
+.flip-card:hover .flip-card-inner,.flip-card.flipped .flip-card-inner{
+  transform:rotateY(180deg);
+}
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 28px 24px;
+  box-sizing: border-box;
+  background: rgba(25, 25, 25, 0.65); /* slightly darker for contrast */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.85);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  overflow-y: auto; /* ✅ scrolls long text instead of clipping */
+  overflow-x: hidden;
+  text-align: center;
+  scrollbar-width: none; /* hide scrollbars (Firefox) */
+  -ms-overflow-style: none; /* IE/Edge */
+}
 
-    .card-row {
-      display:flex;
-      gap:40px;
-      flex-wrap:wrap;
-      justify-content:center;
-      align-items:center;
-      max-width:1600px;
-      padding:40px;
-    }
+.flip-card-front::-webkit-scrollbar,
+.flip-card-back::-webkit-scrollbar {
+  display: none; /* ✅ hide scrollbar for Chrome/Safari */
+}
 
-    .flip-card {
-      width:480px; height:580px;
-      perspective:1600px;
-      overflow:hidden;
-    }
+.flip-card-back {
+  transform: rotateY(180deg);
+}
 
-    .flip-card-inner {
-      width:100%; height:100%;
-      position:relative;
-      transition: transform 0.8s cubic-bezier(.2,.9,.3,1);
-      transform-style: preserve-3d;
-    }
-
-    .flip-card:hover .flip-card-inner,
-    .flip-card.flipped .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .flip-card-front,
-    .flip-card-back {
-      position:absolute; inset:0;
-      border-radius:18px;
-      display:flex; flex-direction:column;
-      align-items:center; justify-content:center;
-      padding:28px; box-sizing:border-box;
-      background: rgba(25,25,25,0.50);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.85);
-      backface-visibility:hidden;
-      -webkit-backface-visibility:hidden;
-    }
-
-    .flip-card-front { transform: rotateY(0deg) translateZ(1px); }
-    .flip-card-back { transform: rotateY(180deg) translateZ(1px); }
-
-    .farm-logo { width:150px; height:150px; border-radius:50%; margin-bottom:10px;
-                 background:transparent; object-fit:contain; }
-    h2 { margin:8px 0 4px; font-size:1.6rem; font-weight:600; color:#DAEE01; text-align:center; }
-    .tagline { font-style:italic; opacity:.95; margin-bottom:8px; text-align:center; }
-    .intro, .back-text { font-size:1.1rem; line-height:1.45; text-align:center; opacity:.95; margin:6px 0; }
-    .highlight { color:#b8f1b0; font-weight:600; }
-    .location { font-size:0.85rem; opacity:.85; margin-top:8px; }
-
-    .fa-lemon { color:#f4d03f; font-size:2rem; margin-top:10px; }
-
-    button {
-      margin-top:14px; padding:12px 20px; border-radius:8px;
-      border:0; cursor:pointer; font-weight:600;
-      background:#c4302b; color:#fff;
-    }
-    button:hover { background:#a82820; }
-
-    /* popup */
-    .video-popup {
-      display:none; position:fixed; inset:0; z-index:1200;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      align-items:center; justify-content:center;
-    }
-    .video-box {
-      width:90%; max-width:780px; border-radius:12px; overflow:hidden;
-      background: rgba(12,12,12,0.95);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6); position:relative;
-    }
-    .video-box iframe { width:100%; height:420px; border:0; display:block; }
-    .video-close { position:absolute; top:10px; right:12px; width:36px; height:36px;
-                   border-radius:50%; background:rgba(255,255,255,0.12); color:#fff; border:0; cursor:pointer; font-size:20px; }
-    .video-close:hover { background:rgba(255,255,255,0.2); }
-
-    @media (max-width:520px) {
-      .flip-card { width:320px; height:420px; }
-      .video-box iframe { height:260px; }
-    }
-  </style>
+.farm-logo{width:130px;height:130px;border-radius:50%;margin-bottom:10px;background:transparent;object-fit:contain;}
+h2{margin:8px 0 4px;font-size:1.6rem;font-weight:600;color:#DAEE01;text-align:center;}
+.tagline{font-style:italic;opacity:.95;margin-bottom:8px;text-align:center;}
+.intro,.back-text{font-size:1.05rem;line-height:1.45;text-align:center;opacity:.95;margin:6px 0;}
+.highlight{color:#b8f1b0;font-weight:600;}
+.location{font-size:.9rem;opacity:.85;margin-top:8px;}
+button{margin-top:14px;padding:12px 20px;border-radius:8px;border:0;cursor:pointer;font-weight:600;background:#b59e2a;color:#fff;}
+button:hover{background:#d1be4a;}
+.fa-lemon{color:#f4d03f;font-size:2rem;margin-top:10px;}
+@media(max-width:520px){.flip-card{width:320px;height:420px;}}
+/* Popup shared base */
+.popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1200;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity .4s ease;
+}
+.popup-box{
+  width:90%;
+  max-width:820px;
+  border-radius:16px;
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(30,40,20,0.9),rgba(10,15,10,0.9));
+  border:2px solid rgba(218,238,1,0.7);
+  box-shadow:0 0 25px rgba(218,238,1,0.3),0 0 40px rgba(184,241,176,0.2);
+  position:relative;
+  transform:scale(0.98);
+  animation:popupGrow .4s ease forwards;
+}
+@keyframes popupGrow{from{transform:scale(0.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+.popup-header{padding:20px;text-align:center;color:#eaffcc;}
+.popup-header h2{margin:0 0 6px;font-size:1.6rem;color:#d4f06a;text-shadow:0 0 8px rgba(218,238,1,0.6);}
+.popup-header p{margin:0;font-size:1rem;opacity:0.9;}
+.popup iframe{width:100%;height:420px;border:none;display:block;}
+.popup-close{
+  position:absolute;
+  top:12px;right:14px;
+  width:40px;height:40px;
+  border-radius:50%;
+  border:2px solid rgba(218,238,1,0.6);
+  background:rgba(0,0,0,0.45);
+  color:#fdfdfd;font-size:22px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .3s ease;
+  text-shadow:0 0 5px rgba(218,238,1,0.8);
+  box-shadow:0 0 8px rgba(218,238,1,0.25);
+}
+.popup-close:hover{background:rgba(218,238,1,0.2);box-shadow:0 0 14px rgba(218,238,1,0.5);transform:scale(1.1);}
+</style>
 </head>
 <body>
 
-  <div class="card-row">
+<main>
 
-    <!-- CARD 1 -->
-    <div class="flip-card" id="card1" role="button" tabindex="0">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <img class="farm-logo" src="https://raw.githubusercontent.com/TarangsFarm/vermicompost-profile/refs/heads/main/large_logo.png" alt="Tarang's Farm logo">
-          <h2>Tarang’s Farm</h2>
-          <div class="tagline">Rooted in Nature • Growing with Science</div>
-          <div class="intro">
-            A <span class="highlight">2-acre regenerative farm</span> in Bhopal growing harmony between soil and sky.<br>
-            We cultivate <b>lemons</b>, <b>ginger</b>, <b>moringa</b>, <b>chilies</b>, and <b>gourds</b> — nourished by our signature <b>RootAmrit Vermicompost</b>.
-          </div>
-          <div class="location">📍 Semli Jadid • Bhopal</div>
-          <i class="fa-solid fa-lemon"></i>
+<!-- ROW 1 -->
+<div class="row">
+
+  <!-- CARD 1 -->
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img class="farm-logo" src="https://raw.githubusercontent.com/TarangsFarm/vermicompost-profile/refs/heads/main/large_logo.png">
+        <h2>Tarang’s Farm</h2>
+        <div class="tagline">Rooted in Nature • Growing with Science</div>
+        <div class="intro">
+          A <span class="highlight">2-acre regenerative farm</span> located in Semli Jadid, Bhopal.  
+          Founded by <b>Tarang Karpe</b>, a biotechnologist and sustainability advocate,  
+          the farm blends <b>organic farming</b> with <b>scientific precision</b>.  
+          We cultivate <b>lemons, ginger, moringa, chili, gourds</b>, and  
+          other multi-layer crops under a <b>self-sustaining eco-cycle</b>.
         </div>
-        <div class="flip-card-back">
-          <h2>🌾 Our Work</h2>
-          <div class="back-text">
-            • RootAmrit Organic Vermicompost<br>
-            • Premium Soil Enrichers<br>
-            • Organic Fruit & Spice Produce<br>
-            • Lemon Orchard Harvests
-          </div>
-          <div class="intro" style="margin-top:6px">
-            <b>Vision:</b> Reviving India’s soil through natural nutrition and creating
-            a sustainable circular farming model that inspires future growers.
-          </div>
-          <button id="openVideoBtn">🎥 Watch Tarang’s Farm</button>
+        <div class="intro">
+          Every crop is nourished by our proprietary <b>RootAmrit Vermicompost</b> —  
+          an organic nutrient mix that improves soil texture, boosts microbial  
+          activity, and enhances plant immunity naturally.
         </div>
+        <div class="location">📍 Semli Jadid • Bhopal</div>
+        <i class="fa-solid fa-lemon"></i>
+      </div>
+      <div class="flip-card-back">
+        <h2>🌾 Our Work</h2>
+        <div class="back-text">
+          • Production of <b>RootAmrit Organic Vermicompost</b> — a premium soil rejuvenator.<br>
+          • Supply of <b>organic fertility inputs</b> for farmers and nurseries.<br>
+          • Cultivation of high-yield lemon orchards with eco drip irrigation.<br>
+          • Research on <b>microbial enhancers</b> for root growth and resilience.<br><br>
+          Our goal is to restore the life within India’s soil — one bed of vermicompost at a time.
+        </div>
+        <div class="intro">
+          <b>Vision:</b> To create a circular farming ecosystem that balances science with soil, 
+          bringing nutrient-rich food and sustainable profitability to farmers everywhere.
+        </div>
+        <button id="openMapBtn">📍 Visit Tarang’s Farm</button>
       </div>
     </div>
+  </div>
 
-    <!-- CARD 2 -->
-    <div class="flip-card" id="card2" role="button" tabindex="0">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <i class="fa-solid fa-seedling fa-3x" style="color:#8de37d;margin-bottom:10px;"></i>
-          <h2>Our Practices</h2>
-          <div class="tagline">Soil • Water • Life in Balance</div>
-          <div class="intro">
-            From <b>organic composting</b> to <b>gravity-fed drip irrigation</b>, every system at Tarang’s Farm is crafted to conserve resources.
-            Our <b>vermicompost beds</b> recycle nutrients back into the earth, and <b>multilayer farming</b> multiplies productivity naturally.
-          </div>
+  <!-- CARD 2 -->
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <i class="fa-solid fa-seedling fa-3x" style="color:#8de37d;margin-bottom:10px;"></i>
+        <h2>Our Practices</h2>
+        <div class="tagline">Soil • Water • Life in Balance</div>
+        <div class="intro">
+          At Tarang’s Farm, every process is designed to be circular and regenerative.  
+          <b>Compost tea brewing, mulching, bio-inoculation, and soil microbe restoration</b> are integrated into each cycle.  
+          No synthetic inputs — only microbial life and organic matter return to the earth.
         </div>
-        <div class="flip-card-back">
-          <h2>🌿 Sustainable Approach</h2>
-          <div class="back-text">
-            • 18 Vermicompost Beds between Lemon Trees<br>
-            • Rain-Pipe Irrigation & Mulching<br>
-            • Zero Chemical Farming<br>
-            • Soil Microbial Restoration
-          </div>
-          <div class="intro">
-            Each cycle of production strengthens biodiversity, conserves groundwater, and restores the living fabric of our soil.
-          </div>
+        <div class="intro">
+          Water is conserved through <b>gravity-fed irrigation</b>, 
+          energy is saved through <b>zero-pump distribution</b>, and 
+          waste is recycled to create value for the next crop.
         </div>
       </div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="flip-card" id="card3" role="button" tabindex="0">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <i class="fa-solid fa-flask fa-3x" style="color:#b0d8ff;margin-bottom:10px;"></i>
-          <h2>Our Vision & Future</h2>
-          <div class="tagline">Innovation • Sustainability • Growth</div>
-          <div class="intro">
-            We’re setting up a <b>Plant Tissue Culture Lab</b> and <b>Indoor Nursery</b> to produce eco-friendly, disease-free plants.
-            Our aim: create future crops rooted in science yet grown with nature’s rhythm.
-          </div>
-        </div>
-        <div class="flip-card-back">
-          <h2>🌱 The Road Ahead</h2>
-          <div class="back-text">
-            • Expand RootAmrit Production<br>
-            • Launch Tissue Culture Programs<br>
-            • Train Farmers in Regenerative Models<br>
-            • Inspire Urban Gardening Movements
-          </div>
-          <div class="intro">
-            Tarang’s Farm stands as a bridge between traditional wisdom and modern ecological science — growing life sustainably.
-          </div>
+      <div class="flip-card-back">
+        <h2>🌿 Sustainable Approach</h2>
+        <div class="back-text">
+          • 18 Vermicompost beds placed strategically between lemon trees.<br>
+          • Drip lines connected to a 1000 L tank for precision watering.<br>
+          • Natural mulching for moisture retention and weed control.<br>
+          • Zero chemical use — only earthworm and bacterial processes.<br><br>
+          Our soil tests show a steady increase in humus content and microbial density — 
+          proof that regeneration works faster than degradation when guided by care.
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Video Popup -->
-  <div id="videoPopup" class="video-popup">
-    <div class="video-box">
-      <button class="video-close" id="closeVideoBtn">×</button>
-      <iframe id="farmIframe" src="" allow="autoplay; encrypted-media" allowfullscreen title="Tarang's Farm Intro"></iframe>
+  <!-- CARD 3 -->
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <i class="fa-solid fa-flask fa-3x" style="color:#b0d8ff;margin-bottom:10px;"></i>
+        <h2>Innovation & Future</h2>
+        <div class="tagline">Science Meets Soil</div>
+        <div class="intro">
+          Led by Tarang Karpe’s background in <b>Biotechnology, Polymer Science, and Production Management</b>, 
+          the farm merges academic research with hands-on practice.  
+          Current projects include a <b>Plant Tissue Culture Lab</b> for disease-free saplings 
+          and an <b>Indoor Plant Nursery</b> for urban growers.
+        </div>
+        <div class="intro">
+          We’re developing a <b>vermicompost-based plant medium</b> for tissue culture 
+          and micro propagation — reducing dependency on imported agar substrates 
+          while boosting local bio value chains.
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h2>🌱 The Road Ahead</h2>
+        <div class="back-text">
+          • RootAmrit lab-scale production upgrade to micro factory.<br>
+          • Partnership with agro-universities for biofertilizer trials.<br>
+          • Educational visits and training for young farmers.<br>
+          • Online platform for sustainable garden supplies and tutorials.<br><br>
+          <b>Goal:</b> Build a transparent supply chain where every consumer knows their soil’s story.
+        </div>
+      </div>
     </div>
   </div>
 
-  <script>
-    document.querySelectorAll('.flip-card').forEach(card => {
-      card.addEventListener('click', e => {
-        if (e.target && (e.target.id === 'openVideoBtn' || e.target.closest('#openVideoBtn'))) return;
-        card.classList.toggle('flipped');
-      });
-      card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('flipped'); }
-      });
-    });
+</div>
 
-    const VIDEO_URL = "https://www.youtube.com/embed/NQYKpVwpRXA?rel=0&autoplay=1&mute=0";
-    const popup = document.getElementById('videoPopup');
-    const iframe = document.getElementById('farmIframe');
-    const openBtn = document.getElementById('openVideoBtn');
-    const closeBtn = document.getElementById('closeVideoBtn');
+<!-- ROW 2 -->
+<div class="row">
 
-    function openVideo() {
-      iframe.src = VIDEO_URL;
-      popup.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-    function closeVideo() {
-      iframe.src = '';
-      popup.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-    openBtn.addEventListener('click', openVideo);
-    closeBtn.addEventListener('click', closeVideo);
-    popup.addEventListener('click', e => { if (e.target === popup) closeVideo(); });
-    window.addEventListener('load', () => { setTimeout(openVideo, 800); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && popup.style.display === 'flex') closeVideo(); });
-  </script>
+  <!-- CARD 4 -->
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <i class="fa-solid fa-recycle fa-3x" style="color:#9be37c;margin-bottom:10px;"></i>
+        <h2>Waste to Wealth</h2>
+        <div class="tagline">Circular Economy in Action</div>
+        <div class="intro">
+          Nothing goes to waste at Tarang’s Farm. All organic residue — from fallen leaves 
+          to harvest by-products — is transformed into new value through <b>composting, mulching, 
+          and bio-digestion</b>.  
+          Even lemon peels and cow dung feed our vermicompost ecosystem.
+        </div>
+        <div class="intro">
+          By closing the loop, we reduce carbon footprint and create inputs that feed back into our fields — 
+          a true zero-waste philosophy in practice.
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h2>♻ Zero-Waste Model</h2>
+        <div class="back-text">
+          • 100% organic waste converted to compost on-site.<br>
+          • Biogas pilot system under testing phase.<br>
+          • Recycled plastic nursery pots and eco-friendly packaging.<br>
+          • Ash and biochar used as soil conditioners.<br><br>
+          <b>Outcome:</b> Zero landfill disposal and improved carbon sequestration on our farm soil.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <i class="fa-solid fa-hand-holding-droplet fa-3x" style="color:#7cd3ff;margin-bottom:10px;"></i>
+        <h2>Water Management</h2>
+        <div class="tagline">Efficient Irrigation • Smart Design</div>
+        <div class="intro">
+          Our <b>gravity-fed irrigation system</b> uses a 1000 L tank at 14 ft height to 
+          water 350 lemon trees and 18 vermicompost beds without electricity.  
+          It ensures steady pressure and uniform distribution across 2 acres.
+        </div>
+        <div class="intro">
+          Rainwater is collected, filtered, and reused — making the farm independent of groundwater pumping.  
+          This not only saves energy but protects soil microbes from chemical contamination.
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h2>💧 Conservation in Practice</h2>
+        <div class="back-text">
+          • Low-pressure drip design reduces water loss by 40%.<br>
+          • Rainwater harvesting pits feed sub-soil aquifers.<br>
+          • Mulch cover reduces evaporation and regulates temperature.<br>
+          • Natural filters prevent clogging in drip lines.<br><br>
+          The result is a farm that thrives on precision hydration with zero waste.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 -->
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <i class="fa-solid fa-id-badge" style="font-size:60px;color:#FFD700;margin-bottom:10px;"></i>
+        <h2>Connect</h2>
+        <p class="tagline">Digital Visiting Card</p>
+        <div class="intro">
+          Tarang Karpe — Biotechnologist • Agro-Entrepreneur • Founder of RootAmrit by Tarang’s Farm.  
+          Reach out for collaboration, organic farming guidance, or to experience our soil alive in action.
+        </div>
+      </div>
+      <div class="flip-card-back">
+        <h3>📇 Get in Touch</h3>
+        <p class="back-text">Collaborate, learn or partner with Tarang’s Farm on organic and sustainable projects.</p>
+        <div style="display:flex;justify-content:center;gap:18px;margin-top:16px;font-size:1.6rem;">
+          <a href="https://wa.me/917000338275" target="_blank" style="color:#25D366;"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="mailto:tarangkarpe@gmail.com" target="_blank" style="color:#FFD700;"><i class="fa-solid fa-envelope"></i></a>
+          <a href="https://tarangkarpe.github.io" target="_blank" style="color:#b8f1b0;"><i class="fa-solid fa-globe"></i></a>
+        </div>
+        <p style="margin-top:14px;font-size:0.9rem;opacity:0.9;">
+          Website: <a href="https://tarangkarpe.github.io" target="_blank" style="color:#b8f1b0;">tarangkarpe.github.io</a><br>
+          WhatsApp Business: <a href="https://wa.me/917000338275" target="_blank" style="color:#25D366;">7000338275</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+
+<!-- INTRO VIDEO POPUP -->
+<div id="videoPopup" class="popup">
+  <div class="popup-box">
+    <button class="popup-close" id="closeVideoBtn">×</button>
+    <div class="popup-header">
+      <h2>🌿 Welcome to Tarang’s Farm</h2>
+      <p>Where science meets soil — a 2-acre organic journey rooted in balance, sustainability, and growth.</p>
+    </div>
+    <iframe id="farmIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- MAP POPUP -->
+<div id="mapPopup" class="popup">
+  <div class="popup-box">
+    <button class="popup-close" id="closeMapBtn">×</button>
+    <div class="popup-header">
+      <h2>📍 Visit Tarang’s Farm</h2>
+      <p>Located in Semli Jadid, Bhopal — where we grow harmony between nature and innovation.</p>
+    </div>
+    <iframe id="mapIframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4494.325886746534!2d77.13136999999999!3d23.0252455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397cf9003b22b997%3A0x819d94eb00df0f70!2sTarang&#39;s%20Farm!5e1!3m2!1sen!2sin!4v1762259635411!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>
+
+<script>
+// Flip logic
+document.querySelectorAll('.flip-card').forEach(card=>{
+  card.addEventListener('click',e=>{
+    if(e.target && (e.target.id==='openMapBtn'||e.target.closest('#openMapBtn')))return;
+    card.classList.toggle('flipped');
+  });
+});
+
+// === Video Popup Logic ===
+const VIDEO_URL="https://www.youtube.com/embed/NQYKpVwpRXA?autoplay=1&rel=0";
+const videoPopup=document.getElementById('videoPopup');
+const videoFrame=document.getElementById('farmIframe');
+const closeVideo=document.getElementById('closeVideoBtn');
+
+function openVideo(){
+  videoFrame.src=VIDEO_URL;
+  videoPopup.style.display='flex';
+  requestAnimationFrame(()=>videoPopup.style.opacity='1');
+  document.body.style.overflow='hidden';
+}
+function closeVideoPopup(){
+  videoPopup.style.opacity='0';
+  setTimeout(()=>{
+    videoFrame.src='';
+    videoPopup.style.display='none';
+    document.body.style.overflow='';
+  },300);
+}
+window.addEventListener('load',()=>setTimeout(openVideo,800));
+closeVideo.addEventListener('click',closeVideoPopup);
+videoPopup.addEventListener('click',e=>{if(e.target===videoPopup)closeVideoPopup();});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&videoPopup.style.display==='flex')closeVideoPopup();});
+
+// === Map Popup Logic ===
+const mapPopup=document.getElementById('mapPopup');
+const closeMap=document.getElementById('closeMapBtn');
+function openMap(){mapPopup.style.display='flex';requestAnimationFrame(()=>mapPopup.style.opacity='1');document.body.style.overflow='hidden';}
+function closeMapPopup(){mapPopup.style.opacity='0';setTimeout(()=>{mapPopup.style.display='none';document.body.style.overflow='';},300);}
+document.querySelectorAll('#openMapBtn').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();openMap();}));
+closeMap.addEventListener('click',closeMapPopup);
+mapPopup.addEventListener('click',e=>{if(e.target===mapPopup)closeMapPopup();});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&mapPopup.style.display==='flex')closeMapPopup();});
+</script>
+
 </body>
 </html>
